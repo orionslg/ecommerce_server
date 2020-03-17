@@ -2,7 +2,7 @@ const { genSaltSync, hashSync, compareSync} = require('bcryptjs');
 
 module.exports = {
   hashPassword(password) {
-    const salt = genSaltSync(process.env.SALT);
+    const salt = genSaltSync(+process.env.SALT);
     return hashSync(password, salt);
   },
 
