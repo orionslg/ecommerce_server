@@ -4,7 +4,6 @@ class Controller {
   static async create (req, res, next) {
     try {
       const { name, image_url, price, stock, description, CategoryId } = req.body;
-      console.log(name, image_url, price, stock, description, CategoryId);
       const newProduct = await Product.create({
           name,
           image_url,
@@ -47,8 +46,9 @@ class Controller {
         where: {
           id: req.params.id,
         },
+        include: ['Category']
       });
-      
+
       if(product) {
         res.status(200).json(product);
       } else {
@@ -65,13 +65,14 @@ class Controller {
 
   static async update(req, res, next) {
     try {
-      const { name, image_url, price, stock } = req.body;
+      const { name, image_url, price, stock, description, CategoryId } = req.body;
       const product = await Product.update({
         name,
         image_url,
         price,
         stock,
         description,
+        CategoryId
       }, {
         where: {
           id: req.params.id,
@@ -98,14 +99,28 @@ class Controller {
 
   static async remove(req, res, next) {
     try {
-      await Product.destroy({
+      const product = await Product.findOne({
         where: {
           id: req.params.id,
         },
       });
-      res.status(200).json({
-        message: `Success deleting product ${req.params.id}`,
-      })
+      if (product) {
+        await Product.destroy({
+          where: {
+            id: req.params.id,
+          },
+        });
+        
+        res.status(200).json({
+          message: `Success deleting product ${req.params.id}`,
+        });
+      } else {
+        next({
+          status: 404,
+          name: 'Not found',
+          message: 'Product not found',
+        });
+      }
     } catch (err) {
       next(err);
     }

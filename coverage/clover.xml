@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1584521183885" clover="3.2.0">
-  <project timestamp="1584521183886" name="All files">
-    <metrics statements="191" coveredstatements="154" conditionals="44" coveredconditionals="29" methods="25" coveredmethods="22" elements="260" coveredelements="205" complexity="0" loc="191" ncloc="191" packages="7" files="15" classes="15"/>
+<coverage generated="1584538395726" clover="3.2.0">
+  <project timestamp="1584538395727" name="All files">
+    <metrics statements="196" coveredstatements="175" conditionals="46" coveredconditionals="35" methods="25" coveredmethods="25" elements="267" coveredelements="235" complexity="0" loc="196" ncloc="196" packages="7" files="15" classes="15"/>
     <package name="ecommerce_server">
       <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="app.js" path="/mnt/c/Users/orion/OneDrive/Desktop/repo-phase2-pemantapan/E-commerce/ecommerce_server/app.js">
@@ -35,40 +35,42 @@
       </file>
     </package>
     <package name="ecommerce_server.controllers">
-      <metrics statements="57" coveredstatements="37" conditionals="14" coveredconditionals="10" methods="7" coveredmethods="4"/>
+      <metrics statements="59" coveredstatements="55" conditionals="16" coveredconditionals="16" methods="7" coveredmethods="7"/>
       <file name="ProductController.js" path="/mnt/c/Users/orion/OneDrive/Desktop/repo-phase2-pemantapan/E-commerce/ecommerce_server/controllers/ProductController.js">
-        <metrics statements="31" coveredstatements="12" conditionals="4" coveredconditionals="0" methods="5" coveredmethods="2"/>
+        <metrics statements="33" coveredstatements="30" conditionals="6" coveredconditionals="6" methods="5" coveredmethods="5"/>
         <line num="1" count="2" type="stmt"/>
         <line num="5" count="5" type="stmt"/>
         <line num="6" count="5" type="stmt"/>
         <line num="7" count="5" type="stmt"/>
-        <line num="8" count="5" type="stmt"/>
-        <line num="17" count="2" type="stmt"/>
-        <line num="26" count="2" type="stmt"/>
-        <line num="29" count="3" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
         <line num="34" count="1" type="stmt"/>
-        <line num="35" count="1" type="stmt"/>
-        <line num="38" count="1" type="stmt"/>
-        <line num="40" count="0" type="stmt"/>
-        <line num="45" count="0" type="stmt"/>
-        <line num="46" count="0" type="stmt"/>
-        <line num="52" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="53" count="0" type="stmt"/>
-        <line num="55" count="0" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="45" count="2" type="stmt"/>
+        <line num="52" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
         <line num="62" count="0" type="stmt"/>
-        <line num="67" count="0" type="stmt"/>
-        <line num="68" count="0" type="stmt"/>
-        <line num="69" count="0" type="stmt"/>
-        <line num="82" count="0" type="stmt"/>
-        <line num="84" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="85" count="0" type="stmt"/>
-        <line num="87" count="0" type="stmt"/>
-        <line num="94" count="0" type="stmt"/>
-        <line num="100" count="0" type="stmt"/>
-        <line num="101" count="0" type="stmt"/>
-        <line num="106" count="0" type="stmt"/>
-        <line num="110" count="0" type="stmt"/>
-        <line num="116" count="2" type="stmt"/>
+        <line num="67" count="4" type="stmt"/>
+        <line num="68" count="4" type="stmt"/>
+        <line num="69" count="4" type="stmt"/>
+        <line num="83" count="2" type="stmt"/>
+        <line num="85" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="86" count="1" type="stmt"/>
+        <line num="88" count="1" type="stmt"/>
+        <line num="95" count="2" type="stmt"/>
+        <line num="101" count="2" type="stmt"/>
+        <line num="102" count="2" type="stmt"/>
+        <line num="107" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="108" count="1" type="stmt"/>
+        <line num="114" count="1" type="stmt"/>
+        <line num="118" count="1" type="stmt"/>
+        <line num="125" count="0" type="stmt"/>
+        <line num="131" count="2" type="stmt"/>
       </file>
       <file name="UserController.js" path="/mnt/c/Users/orion/OneDrive/Desktop/repo-phase2-pemantapan/E-commerce/ecommerce_server/controllers/UserController.js">
         <metrics statements="26" coveredstatements="25" conditionals="10" coveredconditionals="10" methods="2" coveredmethods="2"/>
@@ -115,7 +117,7 @@
         <line num="1" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
         <line num="5" count="3" type="stmt"/>
-        <line num="9" count="6" type="stmt"/>
+        <line num="9" count="14" type="stmt"/>
       </file>
     </package>
     <package name="ecommerce_server.middlewares">
@@ -125,35 +127,35 @@
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
         <line num="4" count="2" type="stmt"/>
-        <line num="6" count="7" type="stmt"/>
-        <line num="7" count="7" type="stmt"/>
-        <line num="8" count="7" type="cond" truecount="2" falsecount="0"/>
-        <line num="9" count="6" type="stmt"/>
-        <line num="11" count="6" type="stmt"/>
-        <line num="15" count="6" type="cond" truecount="1" falsecount="1"/>
-        <line num="16" count="6" type="stmt"/>
-        <line num="17" count="6" type="stmt"/>
+        <line num="6" count="17" type="stmt"/>
+        <line num="7" count="17" type="stmt"/>
+        <line num="8" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="14" type="stmt"/>
+        <line num="11" count="14" type="stmt"/>
+        <line num="15" count="14" type="cond" truecount="1" falsecount="1"/>
+        <line num="16" count="14" type="stmt"/>
+        <line num="17" count="14" type="stmt"/>
         <line num="19" count="0" type="stmt"/>
-        <line num="27" count="1" type="stmt"/>
+        <line num="27" count="3" type="stmt"/>
         <line num="35" count="0" type="stmt"/>
-        <line num="40" count="6" type="stmt"/>
-        <line num="41" count="6" type="cond" truecount="2" falsecount="0"/>
-        <line num="42" count="5" type="stmt"/>
-        <line num="44" count="1" type="stmt"/>
+        <line num="40" count="14" type="stmt"/>
+        <line num="41" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="42" count="11" type="stmt"/>
+        <line num="44" count="3" type="stmt"/>
       </file>
       <file name="error-handler.js" path="/mnt/c/Users/orion/OneDrive/Desktop/repo-phase2-pemantapan/E-commerce/ecommerce_server/middlewares/error-handler.js">
         <metrics statements="28" coveredstatements="17" conditionals="8" coveredconditionals="4" methods="1" coveredmethods="1"/>
         <line num="1" count="2" type="stmt"/>
-        <line num="2" count="13" type="stmt"/>
-        <line num="3" count="13" type="stmt"/>
-        <line num="4" count="13" type="stmt"/>
-        <line num="8" count="13" type="cond" truecount="2" falsecount="2"/>
-        <line num="10" count="7" type="stmt"/>
-        <line num="11" count="7" type="stmt"/>
-        <line num="12" count="7" type="stmt"/>
-        <line num="13" count="16" type="stmt"/>
-        <line num="15" count="7" type="stmt"/>
-        <line num="16" count="7" type="stmt"/>
+        <line num="2" count="22" type="stmt"/>
+        <line num="3" count="22" type="stmt"/>
+        <line num="4" count="22" type="stmt"/>
+        <line num="8" count="22" type="cond" truecount="2" falsecount="2"/>
+        <line num="10" count="9" type="stmt"/>
+        <line num="11" count="9" type="stmt"/>
+        <line num="12" count="9" type="stmt"/>
+        <line num="13" count="23" type="stmt"/>
+        <line num="15" count="9" type="stmt"/>
+        <line num="16" count="9" type="stmt"/>
         <line num="19" count="0" type="stmt"/>
         <line num="20" count="0" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
@@ -165,11 +167,11 @@
         <line num="30" count="0" type="stmt"/>
         <line num="31" count="0" type="stmt"/>
         <line num="32" count="0" type="stmt"/>
-        <line num="35" count="6" type="cond" truecount="1" falsecount="1"/>
-        <line num="36" count="6" type="cond" truecount="1" falsecount="1"/>
-        <line num="37" count="6" type="stmt"/>
-        <line num="38" count="6" type="stmt"/>
-        <line num="39" count="6" type="stmt"/>
+        <line num="35" count="13" type="cond" truecount="1" falsecount="1"/>
+        <line num="36" count="13" type="cond" truecount="1" falsecount="1"/>
+        <line num="37" count="13" type="stmt"/>
+        <line num="38" count="13" type="stmt"/>
+        <line num="39" count="13" type="stmt"/>
         <line num="43" count="2" type="stmt"/>
       </file>
     </package>
@@ -212,7 +214,7 @@
         <line num="2" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
         <line num="7" count="2" type="stmt"/>
-        <line num="93" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="93" count="11" type="cond" truecount="2" falsecount="0"/>
         <line num="94" count="1" type="stmt"/>
         <line num="100" count="2" type="stmt"/>
         <line num="102" count="2" type="stmt"/>
@@ -230,16 +232,19 @@
       </file>
     </package>
     <package name="ecommerce_server.router">
-      <metrics statements="18" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="21" coveredstatements="21" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="ProductRoute.js" path="/mnt/c/Users/orion/OneDrive/Desktop/repo-phase2-pemantapan/E-commerce/ecommerce_server/router/ProductRoute.js">
-        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
         <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
         <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
       </file>
       <file name="UserRoutes.js" path="/mnt/c/Users/orion/OneDrive/Desktop/repo-phase2-pemantapan/E-commerce/ecommerce_server/router/UserRoutes.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>

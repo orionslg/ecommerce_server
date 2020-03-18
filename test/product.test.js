@@ -234,6 +234,7 @@ describe('Product endpoint test', () => {
           expect(err).toBe(null);
         }
       });
+
     })
   });
 
@@ -258,12 +259,347 @@ describe('Product endpoint test', () => {
             .get('/product')
             .set('access_token', token_admin)
             expect(Array.isArray(res.body)).toBe(true);
-            console.log(res.body);
-            // expect(res.body[res.body.length - 1]).toHaveProperty('name', 'You-C 1000')
+            expect(res.body[res.body.length - 1]).toHaveProperty('name', 'You-C 1000');
+            expect(res.body[res.body.length - 1]).toHaveProperty('image_url', 'http://imgurl.com/abcdefg');
+            expect(res.body[res.body.length - 1]).toHaveProperty('price', 7500);
+            expect(res.body[res.body.length - 1]).toHaveProperty('stock', 100);
+            expect(res.body[res.body.length - 1]).toHaveProperty('description', 'Liquid vitamin C for your daily wellbeing');
+            expect(res.body[res.body.length - 1]).toHaveProperty('CategoryId', 1);
+            expect(typeof res.body[res.body.length - 1].Category).toBe('object');
+            expect(res.body[res.body.length - 1].Category).toHaveProperty('name', 'Drink');
+            expect(res.status).toBe(200);
         } catch (err) {
           expect(err).toBe(null);
         }
       })
+    });
+  });
+
+  describe('DELETE /product/:id', () => {
+    describe('Success response', () => {
+      test('Return success deleting message', async () => {
+        try {
+          const product = await Product.create({
+            name: 'You-C 1000',
+            image_url: 'http://imgurl.com/abcdefg',
+            price: 7500,
+            stock: 100,
+            description: 'Liquid vitamin C for your daily wellbeing',
+            CategoryId: 1,
+          });
+  
+          const res = await request(app)
+            .delete(`/product/${product.id}`)
+            .set('access_token', token_admin)
+  
+            expect(res.body).toHaveProperty('message', `Success deleting product ${product.id}`);
+            expect(res.status).toBe(200);
+        } catch (err) {
+          expect(err).toBe(null);
+        }
+      });
+    });
+
+    describe('Failed responses', () => {
+      test('Return product not found message', async () => {
+        try {
+          const products = await Product.findAll();
+
+          const res = await request(app)
+            .delete(`/product/${products.length+1}`)
+            .set('access_token', token_admin)
+
+            expect(res.body).toHaveProperty('message', 'Not found');
+            expect(res.body).toHaveProperty('errors', expect.any(Array));
+            expect(res.body.errors).toContain('Product not found');
+            expect(res.status).toBe(404);
+        } catch (err) {
+          expect(err).toBe(null);
+        }
+      });
+
+      test('Return not authenticated message', async () => {
+        try {
+          const res = await request(app)
+            .delete(`/product/1`)
+
+            expect(res.body).toHaveProperty('message', 'Unauthorized');
+            expect(res.body).toHaveProperty('errors', expect.any(Array));
+            expect(res.body.errors).toContain('Please login first');
+            expect(res.status).toBe(401);
+        } catch (err) {
+          expect(err).toBe(null);
+        }
+      });
+
+      test('Return not authorized message', async () => {
+        try {
+          const res = await request(app)
+            .delete(`/product/1`)
+            .set('access_token', token_client);
+            expect(res.body).toHaveProperty('message', 'Unauthorized');
+            expect(res.body).toHaveProperty('errors', expect.any(Array));
+            expect(res.body.errors).toContain('Admin access required');
+            expect(res.status).toBe(401);
+        } catch (err) {
+          expect(err).toBe(null);
+        }
+      });
+    })
+  });
+
+  describe('GET /product/:id', () => {
+    describe('Success response', () => {
+      test('Return an object with product data', async () => {
+        try {
+          const product = await Product.create({
+            name: 'You-C 1000',
+            image_url: 'http://imgurl.com/abcdefg',
+            price: 7500,
+            stock: 100,
+            description: 'Liquid vitamin C for your daily wellbeing',
+            CategoryId: 1,
+          });
+  
+          const res = await request(app)
+            .get(`/product/${product.id}`)
+            .set('access_token', token_admin)
+
+            expect(res.body).toHaveProperty('name', 'You-C 1000');
+            expect(res.body).toHaveProperty('image_url', 'http://imgurl.com/abcdefg');
+            expect(res.body).toHaveProperty('price', 7500);
+            expect(res.body).toHaveProperty('stock', 100);
+            expect(res.body).toHaveProperty('description', 'Liquid vitamin C for your daily wellbeing');
+            expect(res.body).toHaveProperty('CategoryId', 1);
+            expect(typeof res.body.Category).toBe('object');
+            expect(res.body.Category).toHaveProperty('name', 'Drink');
+            expect(res.status).toBe(200);
+        } catch (err) {
+          expect(err).toBe(null);
+        }
+      });
+    });
+
+    describe('Failed responses', () => {
+      test('Return product not found message', async () => {
+        try {
+          const products = await Product.findAll();
+
+          const res = await request(app)
+            .get(`/product/${products.length+10}`)
+            .set('access_token', token_admin)
+
+            expect(res.body).toHaveProperty('message', 'Not found');
+            expect(res.body).toHaveProperty('errors', expect.any(Array));
+            expect(res.body.errors).toContain('Product not found');
+            expect(res.status).toBe(404);
+        } catch (err) {
+          expect(err).toBe(null);
+        }
+      });
+
     })
   })
-})
+
+  describe('PUT /product/:id', () => {
+    describe('Success response', () => {
+      test('Return success updating product message', async () => {
+        try {
+          const product = await Product.create({
+            name: 'You-C 1000',
+            image_url: 'http://imgurl.com/abcdefg',
+            price: 7500,
+            stock: 100,
+            description: 'Liquid vitamin C for your daily wellbeing',
+            CategoryId: 1,
+          });
+  
+          const res = await request(app)
+            .put(`/product/${product.id}`)
+            .set('access_token', token_admin)
+            .send({
+              name: 'You-C 2000',
+              image_url: 'http://google.com/image.png',
+              price: 8000,
+              stock: 300,
+              description: 'Vitamin C untuk diminum setiap hari',
+              CategoryId: 1,
+            })
+            expect(res.body).toHaveProperty('name', 'You-C 2000');
+            expect(res.body).toHaveProperty('image_url', 'http://google.com/image.png');
+            expect(res.body).toHaveProperty('price', 8000);
+            expect(res.body).toHaveProperty('stock', 300);
+            expect(res.body).toHaveProperty('CategoryId', 1);
+            expect(res.body).toHaveProperty('description', 'Vitamin C untuk diminum setiap hari');
+            expect(res.status).toBe(200);
+        } catch (err) {
+          expect(err).toBe(null);
+        }
+      });
+
+    describe('Failed responses', () => {
+      test('Return authorization failed message', async () => {
+        try {
+          const product = await Product.create({
+            name: 'You-C 1000',
+            image_url: 'http://imgurl.com/abcdefg',
+            price: 7500,
+            stock: 100,
+            description: 'Liquid vitamin C for your daily wellbeing',
+            CategoryId: 1,
+          });
+  
+          const res = await request(app)
+            .put(`/product/${product.id}`)
+            .set('access_token', token_client)
+            .send({
+              name: 'You-C 2000',
+              image_url: 'http://google.com/image.png',
+              price: 8000,
+              stock: 300,
+              description: 'Vitamin C untuk diminum setiap hari',
+              CategoryId: 1,
+            })
+            expect(res.body).toHaveProperty('message', 'Unauthorized');
+            expect(res.body).toHaveProperty('errors', expect.any(Array));
+            expect(res.body.errors).toContain('Admin access required');
+            expect(res.status).toBe(401);
+        } catch (err) {
+          expect(err).toBe(null);
+        }
+      });
+
+      test('Return authentication failed message', async () => {
+        try {
+          const product = await Product.create({
+            name: 'You-C 1000',
+            image_url: 'http://imgurl.com/abcdefg',
+            price: 7500,
+            stock: 100,
+            description: 'Liquid vitamin C for your daily wellbeing',
+            CategoryId: 1,
+          });
+  
+          const res = await request(app)
+            .put(`/product/${product.id}`)
+            .send({
+              name: 'You-C 2000',
+              image_url: 'http://google.com/image.png',
+              price: 8000,
+              stock: 300,
+              description: 'Vitamin C untuk diminum setiap hari',
+              CategoryId: 1,
+            })
+            expect(res.body).toHaveProperty('message', 'Unauthorized');
+            expect(res.body).toHaveProperty('errors', expect.any(Array));
+            expect(res.body.errors).toContain('Please login first');
+            expect(res.status).toBe(401);
+        } catch (err) {
+          expect(err).toBe(null);
+        }
+      });
+
+      test('Return product not found message', async () => {
+        try {
+          const product = await Product.create({
+            name: 'You-C 1000',
+            image_url: 'http://imgurl.com/abcdefg',
+            price: 7500,
+            stock: 100,
+            description: 'Liquid vitamin C for your daily wellbeing',
+            CategoryId: 1,
+          });
+  
+          const res = await request(app)
+            .put(`/product/${product.id + 1}`)
+            .set('access_token', token_admin)
+            .send({
+              name: 'You-C 2000',
+              image_url: 'http://google.com/image.png',
+              price: 8000,
+              stock: 300,
+              description: 'Vitamin C untuk diminum setiap hari',
+              CategoryId: 1,
+            })
+            expect(res.body).toHaveProperty('message', 'Not found');
+            expect(res.body).toHaveProperty('errors', expect.any(Array));
+            expect(res.body.errors).toContain('Product not found');
+            expect(res.status).toBe(404);
+        } catch (err) {
+          expect(err).toBe(null);
+        }
+      });
+
+      test('Return empty value error message', async () => {
+        try {
+          const product = await Product.create({
+            name: 'You-C 1000',
+            image_url: 'http://imgurl.com/abcdefg',
+            price: 7500,
+            stock: 100,
+            description: 'Liquid vitamin C for your daily wellbeing',
+            CategoryId: 1,
+          });
+  
+          const res = await request(app)
+            .put(`/product/${product.id}`)
+            .set('access_token', token_admin)
+            .send({
+              name: '',
+              image_url: '',
+              price:'',
+              stock: '',
+              description: '',
+              CategoryId: '',
+            })
+            expect(res.body).toHaveProperty('message', 'Bad Request');
+            expect(res.body).toHaveProperty('errors', expect.any(Array));
+            expect(res.body.errors.length).toBeGreaterThan(0);
+            expect(res.body.errors).toContain('Product name is required');
+            expect(res.body.errors).toContain('Description is required');
+            expect(res.body.errors).toContain('Price is required');
+            expect(res.body.errors).toContain('Stock is required');
+            expect(res.body.errors).toContain('CategoryId is required');
+            expect(res.status).toBe(400);
+        } catch (err) {
+          expect(err).toBe(null);
+        }
+      });
+
+      test('Return minimum value error message', async () => {
+        try {
+          const product = await Product.create({
+            name: 'You-C 1000',
+            image_url: 'http://imgurl.com/abcdefg',
+            price: 7500,
+            stock: 100,
+            description: 'Liquid vitamin C for your daily wellbeing',
+            CategoryId: 1,
+          });
+  
+          const res = await request(app)
+            .put(`/product/${product.id}`)
+            .set('access_token', token_admin)
+            .send({
+              name: 'You-C 1000',
+              image_url: 'http://imgurl.com/abcdefg',
+              price: -5,
+              stock: -2,
+              description: 'Liquid vitamin C for your daily wellbeing',
+              CategoryId: 1,
+            })
+            expect(res.body).toHaveProperty('message', 'Bad Request');
+            expect(res.body).toHaveProperty('errors', expect.any(Array));
+            expect(res.body.errors.length).toBeGreaterThan(0);
+            expect(res.body.errors).toContain('Stock cannot be negative');
+            expect(res.body.errors).toContain('Price should be greater than or equal to 0');
+            expect(res.status).toBe(400);
+        } catch (err) {
+          expect(err).toBe(null);
+        }
+      });
+
+    })
+    })
+  });
+});
