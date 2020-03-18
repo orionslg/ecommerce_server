@@ -56,6 +56,7 @@ class Controller {
           const payload = {
             id: user.id,
             email: user.email,
+            role: user.role,
           };
           const token = generateToken(payload);
           res.status(200).json({

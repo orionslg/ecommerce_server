@@ -3,14 +3,15 @@ const { Product, User } = require('../models');
 class Controller {
   static async create (req, res, next) {
     try {
-      const { name, image_url, price, stock } = req.body;
-  
-      const newProduct = Product.create({
+      const { name, image_url, price, stock, description, CategoryId } = req.body;
+      console.log(name, image_url, price, stock, description, CategoryId);
+      const newProduct = await Product.create({
           name,
           image_url,
           price,
           stock,
           description,
+          CategoryId
         });
       
       const payload = {
@@ -19,6 +20,7 @@ class Controller {
         price: newProduct.price,
         stock: newProduct.stock,
         description: newProduct.description,
+        CategoryId: newProduct.CategoryId,
       };
 
       res.status(201).json(payload);
@@ -30,7 +32,9 @@ class Controller {
 
   static async findAll(req, res, next) {
     try {
-      const products = await Product.findAll();
+      const products = await Product.findAll({
+        include: ['Category']
+      });
       res.status(200).json(products);
     } catch(err) {
       next(err);
