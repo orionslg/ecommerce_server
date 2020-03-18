@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('../app');
 const {User, sequelize} = require('../models');
 const {queryInterface} = sequelize;
-const { hashPassword } = require('../helpers/bcrypt');
+
 afterEach((done) => {
   queryInterface.bulkDelete('Users', {})
     .then(response => {
