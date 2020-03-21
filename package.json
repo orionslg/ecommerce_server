@@ -8,7 +8,8 @@
     "dev": "NODE_ENV=development nodemon bin/http.js",
     "migrate:reset": "sequelize db:migrate:undo:all && npm run migrate",
     "migrate":  "sequelize db:migrate",
-    "pretest": "NODE_ENV=test npm run migrate:reset"
+    "pretest": "NODE_ENV=test npm run migrate:reset",
+    "start": "node bin/http.js"
   },
   "repository": {
     "type": "git",
