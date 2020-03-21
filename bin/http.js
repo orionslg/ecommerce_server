@@ -1,15 +1,6 @@
-const env = process.env.NODE_ENV
-
-switch(env) {
-  case 'development':
-    require('dotenv').config({ path: process.cwd() +'/.env' });
-    break;
-  case 'test':
-    require('dotenv').config({ path: process.cwd() +'/.env.test' });
-    break;
-  default:
-    break;
-}
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config();
+};
 
 const app = require('../app');
 const http = require('http');
