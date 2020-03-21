@@ -1,28 +1,44 @@
-const { Product, User } = require('../models');
+const { Product, Category, User } = require('../models');
 
 class Controller {
   static async create (req, res, next) {
     try {
       const { name, image_url, price, stock, description, CategoryId } = req.body;
-      const newProduct = await Product.create({
-          name,
-          image_url,
-          price,
-          stock,
-          description,
-          CategoryId
+      const category = await Category.findOne({
+        where: {
+          id: CategoryId,
+        },
+      });
+      console.log(category);
+      if (category === null) {
+        next({
+          status: 404,
+          message: 'Category not found',
+          name: 'Not found',
         });
+      } else {
+        const newProduct = await Product.create({
+            name,
+            image_url,
+            price,
+            stock,
+            description,
+            CategoryId
+          });
+        
+        const payload = {
+          id: newProduct.id,
+          name: newProduct.name,
+          image_url: newProduct.image_url,
+          price: newProduct.price,
+          stock: newProduct.stock,
+          description: newProduct.description,
+          CategoryId: newProduct.CategoryId,
+        };
+        console.log('masuk di sini');
+        res.status(201).json(payload);
+      }
       
-      const payload = {
-        name: newProduct.name,
-        image_url: newProduct.image_url,
-        price: newProduct.price,
-        stock: newProduct.stock,
-        description: newProduct.description,
-        CategoryId: newProduct.CategoryId,
-      };
-
-      res.status(201).json(payload);
 
     } catch (err) {
       next(err);

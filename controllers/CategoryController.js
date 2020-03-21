@@ -1,14 +1,13 @@
-const { Category } = require('../models');
+const { Category, Product } = require('../models');
 
 class Controller {
   static async create (req, res, next) {
     try {
       const { name } = req.body;
   
-      const newCategory = Category.create({
+      const newCategory = await Category.create({
           name,
         });
-
       res.status(201).json(newCategory);
 
     } catch (err) {
@@ -49,7 +48,7 @@ class Controller {
 
   static async update(req, res, next) {
     try {
-      const { name, image_url, price, stock } = req.body;
+      const { name, } = req.body;
       const category = await Category.update({
         name,
       }, {
@@ -78,6 +77,11 @@ class Controller {
 
   static async remove(req, res, next) {
     try {
+      await Product.destroy({
+        where: {
+          CategoryId: req.params.id,
+        },
+      })
       await Category.destroy({
         where: {
           id: req.params.id,

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for ecommerce_server/router/ProductRoute.js</title>
+    <title>Code coverage report for ecommerce_server/router/CategoryRoutes.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">ecommerce_server/router</a> ProductRoute.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">ecommerce_server/router</a> CategoryRoutes.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -82,16 +82,16 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span></td><td class="text"><pre class="prettyprint lang-js">const router = require('express').Router();
-const ProductController = require('../controllers/ProductController');
+const CategoryController = require('../controllers/CategoryController');
 const { authentication, authorization_product } = require('../middlewares/auth');
 &nbsp;
-router.get('/', ProductController.findAll);
-router.get('/:id', ProductController.findOne);
+router.get('/', CategoryController.findAll);
+router.get('/:id', CategoryController.findOne);
 &nbsp;
 router.use(authentication)
-router.post('/', authorization_product, ProductController.create);
-router.delete('/:id', authorization_product, ProductController.remove);
-router.put('/:id', authorization_product, ProductController.update);
+router.post('/', authorization_product, CategoryController.create);
+router.delete('/:id', authorization_product, CategoryController.remove);
+router.put('/:id', authorization_product, CategoryController.update);
 &nbsp;
 module.exports = router;</pre></td></tr></table></pre>
 

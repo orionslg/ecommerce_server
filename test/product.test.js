@@ -56,6 +56,10 @@ describe('Product endpoint test', () => {
     describe('Success processes', () => {
       test('Should return product object with status 201', async () => {
         try {
+          const category = await Category.create({
+            name: 'New Category 2',
+          });
+
           const res = await request(app)
             .post('/product')
             .set('access_token', token_admin)
@@ -65,13 +69,14 @@ describe('Product endpoint test', () => {
               price: 7500,
               stock: 100,
               description: 'Liquid vitamin C for your daily wellbeing',
-              CategoryId: 1,
+              CategoryId: category.id,
             });
+            expect(res.body).toHaveProperty('id', expect.any(Number));
             expect(res.body).toHaveProperty('name', 'You-C 1000');
             expect(res.body).toHaveProperty('image_url', 'http://imgurl.com/abcdefg');
             expect(res.body).toHaveProperty('price', 7500);
             expect(res.body).toHaveProperty('stock', 100);
-            expect(res.body).toHaveProperty('CategoryId', 1);
+            expect(res.body).toHaveProperty('CategoryId', category.id);
             expect(res.body).toHaveProperty('description', 'Liquid vitamin C for your daily wellbeing');
             expect(res.status).toBe(201);
 
@@ -82,6 +87,10 @@ describe('Product endpoint test', () => {
 
       test('Create new product with empty image_url, should return product object with status 201 with default image link', async () => {
         try {
+          const category = await Category.create({
+            name: 'New Category',
+          });
+
           const res = await request(app)
             .post('/product')
             .set('access_token', token_admin)
@@ -91,13 +100,14 @@ describe('Product endpoint test', () => {
               price: 7500,
               stock: 100,
               description: 'Liquid vitamin C for your daily wellbeing',
-              CategoryId: 1,
+              CategoryId: category.id,
             });
+            expect(res.body).toHaveProperty('id', expect.any(Number));
             expect(res.body).toHaveProperty('name', 'You-C 1000');
             expect(res.body).toHaveProperty('image_url', 'https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081');
             expect(res.body).toHaveProperty('price', 7500);
             expect(res.body).toHaveProperty('stock', 100);
-            expect(res.body).toHaveProperty('CategoryId', 1);
+            expect(res.body).toHaveProperty('CategoryId', category.id);
             expect(res.body).toHaveProperty('description', 'Liquid vitamin C for your daily wellbeing');
             expect(res.status).toBe(201);
 
@@ -159,6 +169,9 @@ describe('Product endpoint test', () => {
 
       test('Should return empty value validation error', async () => {
         try {
+          const category = await Category.create({
+            name: 'Category 3',
+          });
           const res = await request(app)
             .post('/product')
             .set('access_token', token_admin)
@@ -168,7 +181,7 @@ describe('Product endpoint test', () => {
               price: null,
               stock: null,
               description: '',
-              CategoryId: null,
+              CategoryId: category.id,
             })
             expect(res.body).toHaveProperty('message', 'Bad Request');
             expect(res.body).toHaveProperty('errors', expect.any(Array));
@@ -177,7 +190,6 @@ describe('Product endpoint test', () => {
             expect(res.body.errors).toContain('Description is required');
             expect(res.body.errors).toContain('Price is required');
             expect(res.body.errors).toContain('Stock is required');
-            expect(res.body.errors).toContain('CategoryId is required');
             expect(res.status).toBe(400);
 
         } catch (err) {
@@ -242,29 +254,31 @@ describe('Product endpoint test', () => {
     describe('Success responses', () => {
       test('Return an array of object of products', async () => {
         try {
+          
+          const category = await Category.create({
+            name: 'Drink'
+          });
+
           await Product.create({
             name: 'You-C 1000',
             image_url: 'http://imgurl.com/abcdefg',
             price: 7500,
             stock: 100,
             description: 'Liquid vitamin C for your daily wellbeing',
-            CategoryId: 1,
-          });
-
-          await Category.create({
-            name: 'Drink'
+            CategoryId: category.id,
           });
 
           const res = await request(app)
             .get('/product')
             .set('access_token', token_admin)
             expect(Array.isArray(res.body)).toBe(true);
+            expect(res.body[res.body.length - 1]).toHaveProperty('id', expect.any(Number));
             expect(res.body[res.body.length - 1]).toHaveProperty('name', 'You-C 1000');
             expect(res.body[res.body.length - 1]).toHaveProperty('image_url', 'http://imgurl.com/abcdefg');
             expect(res.body[res.body.length - 1]).toHaveProperty('price', 7500);
             expect(res.body[res.body.length - 1]).toHaveProperty('stock', 100);
             expect(res.body[res.body.length - 1]).toHaveProperty('description', 'Liquid vitamin C for your daily wellbeing');
-            expect(res.body[res.body.length - 1]).toHaveProperty('CategoryId', 1);
+            expect(res.body[res.body.length - 1]).toHaveProperty('CategoryId', category.id);
             expect(typeof res.body[res.body.length - 1].Category).toBe('object');
             expect(res.body[res.body.length - 1].Category).toHaveProperty('name', 'Drink');
             expect(res.status).toBe(200);
@@ -352,25 +366,30 @@ describe('Product endpoint test', () => {
     describe('Success response', () => {
       test('Return an object with product data', async () => {
         try {
+          const category = await Product.create({
+            name: 'Drink',
+          });
+
           const product = await Product.create({
             name: 'You-C 1000',
             image_url: 'http://imgurl.com/abcdefg',
             price: 7500,
             stock: 100,
             description: 'Liquid vitamin C for your daily wellbeing',
-            CategoryId: 1,
+            CategoryId: category.id,
           });
   
           const res = await request(app)
             .get(`/product/${product.id}`)
             .set('access_token', token_admin)
 
+            expect(res.body).toHaveProperty('id', expect.any(Number));
             expect(res.body).toHaveProperty('name', 'You-C 1000');
             expect(res.body).toHaveProperty('image_url', 'http://imgurl.com/abcdefg');
             expect(res.body).toHaveProperty('price', 7500);
             expect(res.body).toHaveProperty('stock', 100);
             expect(res.body).toHaveProperty('description', 'Liquid vitamin C for your daily wellbeing');
-            expect(res.body).toHaveProperty('CategoryId', 1);
+            expect(res.body).toHaveProperty('CategoryId', category.id);
             expect(typeof res.body.Category).toBe('object');
             expect(res.body.Category).toHaveProperty('name', 'Drink');
             expect(res.status).toBe(200);
