@@ -8,7 +8,6 @@ switch(env) {
     require('dotenv').config({ path: process.cwd() +'/.env.test' });
     break;
   case 'production':
-    require('dotenv').config();
   default:
     break;
 }
