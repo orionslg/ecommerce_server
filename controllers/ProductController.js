@@ -9,7 +9,6 @@ class Controller {
           id: CategoryId,
         },
       });
-      console.log(category);
       if (category === null) {
         next({
           status: 404,
@@ -35,7 +34,6 @@ class Controller {
           description: newProduct.description,
           CategoryId: newProduct.CategoryId,
         };
-        console.log('masuk di sini');
         res.status(201).json(payload);
       }
       
