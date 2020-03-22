@@ -1,12 +1,18 @@
-if (process.env.NODE_ENV === 'development') {
-  require('dotenv').config();
-};
+const env = process.env.NODE_ENV || 'development'
 
-const app = require('../app');
-const http = require('http');
-const server = http.createServer(app);
-const PORT = process.env.PORT;
+switch (env) {
+  case 'development':
+    require('dotenv').config({path: process.cwd() + '/.env'})
+      break
+  case 'test':
+    require('dotenv').config({path: process.cwd() + '/.env.test'})
+      break
+}
 
-server.listen(PORT, () => {
-  console.log(`Listening on PORT ${PORT}`);
+const app = require('../app')
+const http = require('http')
+const server = http.createServer(app)
+
+server.listen(process.env.PORT, () => {
+  console.log('listening ON PORT ' + process.env.PORT)
 })

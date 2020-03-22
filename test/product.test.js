@@ -366,10 +366,10 @@ describe('Product endpoint test', () => {
     describe('Success response', () => {
       test('Return an object with product data', async () => {
         try {
-          const category = await Product.create({
+          const category = await Category.create({
             name: 'Drink',
           });
-
+          
           const product = await Product.create({
             name: 'You-C 1000',
             image_url: 'http://imgurl.com/abcdefg',
@@ -378,11 +378,11 @@ describe('Product endpoint test', () => {
             description: 'Liquid vitamin C for your daily wellbeing',
             CategoryId: category.id,
           });
-  
+          
           const res = await request(app)
             .get(`/product/${product.id}`)
             .set('access_token', token_admin)
-
+          
             expect(res.body).toHaveProperty('id', expect.any(Number));
             expect(res.body).toHaveProperty('name', 'You-C 1000');
             expect(res.body).toHaveProperty('image_url', 'http://imgurl.com/abcdefg');
