@@ -17,7 +17,9 @@ class Controller {
 
   static async findAll(req, res, next) {
     try {
-      const categories = await Category.findAll();
+      const categories = await Category.findAll({
+        include: Product
+      });
       res.status(200).json(categories);
     } catch(err) {
       next(err);
@@ -30,6 +32,7 @@ class Controller {
         where: {
           id: req.params.id,
         },
+        include: Product,
       });
       
       if(category) {
@@ -82,14 +85,24 @@ class Controller {
           CategoryId: req.params.id,
         },
       })
-      await Category.destroy({
+
+      const category = await Category.destroy({
         where: {
           id: req.params.id,
         },
       });
-      res.status(200).json({
-        message: `Success deleting category ${req.params.id}`,
-      })
+      
+      if (category === 0) {
+        next({
+          status: 404,
+          name: 'Not found',
+          message: 'Category not found',
+        });
+      } else {
+        res.status(200).json({
+          message: `Success deleting category ${req.params.id}`,
+        });
+      }
     } catch (err) {
       next(err);
     }
