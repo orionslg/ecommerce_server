@@ -556,7 +556,7 @@ Returns json category
 
 - **Headers**
 
-    Authorization: `<token>`
+    Authorization: `<access_token>`
 
 -   **URL**
 
@@ -575,7 +575,7 @@ Returns json category
       **Required:**
 
       `name=[string]`\
-      `image_url=[string]`
+      `image_url=[string]`\
       `price=[integer]`\
       `stock=[integer]`\
       `description=[string]`\
@@ -680,7 +680,7 @@ Returns json category
       **Required:**
 
       `name=[string]`\
-      `image_url=[string]`
+      `image_url=[string]`\
       `price=[integer]`\
       `stock=[integer]`\
       `description=[string]`\
