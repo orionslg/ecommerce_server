@@ -587,7 +587,7 @@ Returns json category
 
 -   **Success Response:**
 
-    -   **Code:** 200 <br />
+    -   **Code:** 201 <br />
         **Content:**
         ```json
         {
@@ -661,7 +661,7 @@ Returns json category
 
 - **Headers**
 
-    Authorization: `<token>`
+    Authorization: `<access_token>`
 
 -   **URL**
 
