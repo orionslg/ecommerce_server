@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Product } = require('../models');
 const { comparePassword } = require('../helpers/bcrypt');
 const { generateToken } = require('../helpers/jwtoken');
 
@@ -82,6 +82,10 @@ class Controller {
       next(err);
     }
   }
+
+  // static async findAll(req, res, next) {
+  //   const users = await User.findAll()
+  // }
 }
 
 module.exports = Controller;
