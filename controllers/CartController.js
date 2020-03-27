@@ -1,5 +1,5 @@
 const { Cart, Item, Product, sequelize } = require('../models');
-
+const { Op } = require('sequelize');
 class Controller {
   static async create (req, res, next) {
     
@@ -20,7 +20,6 @@ class Controller {
       });
   
       if (cart) {
-        console.log('Masuk di ada cart');
         if (product) {
           const item = await Item.create({
             ProductId: ProductId,
@@ -51,7 +50,6 @@ class Controller {
               price: product.price,
               CartId: carts.id,
             },{ transaction: t } );
-            console.log('Not here yet');
             return item;
           })
           res.status(201).json(result);
@@ -94,7 +92,6 @@ class Controller {
   static async findByUserId (req, res, next) {
     try {
       const UserId = req.decoded.id;
-
       const charts = await Cart.findAll({
         where: {
           UserId: UserId,
@@ -106,8 +103,7 @@ class Controller {
           include: Product,
         }]
       });
-
-      res.status(201).json(charts);
+      res.status(200).json(charts);
     } catch (err) {
       next(err);
     }
@@ -122,10 +118,9 @@ class Controller {
       });
 
       if (result === 1) {
-        next({
-          status: 200,
-          message: 'Delete Success',
-        });
+        res.status(200).json({
+          message: 'Delete item success'
+        })
       } else {
         next({
           status: 404,
@@ -141,34 +136,115 @@ class Controller {
 
   static async checkout (req, res, next) {
     try {
+      const CartId = req.params.id;
+      const ProductIds = [];
+      
+      const carts = await Cart.findOne({
+        where: {
+          id: CartId,
+        },
+        include: [{
+          model: Item,
+          include: Product,
+        }],
+      });
+      
+      carts.Items.forEach((el) => {
+        ProductIds.push(el.ProductId);
+      })
+
+      const items = await Item.findAll({
+        where: {
+          ProductId: {
+            [Op.in]: ProductIds,
+          },
+        },
+        include: {
+          model: Product,
+        }
+      });
+
+      const notEnoughStocks = [];
+
+      items.forEach((el) => {
+        if (el.quantity > el.Product.stock) {
+          notEnoughStocks.push(el.Products);
+        }
+      });
+
+      if (notEnoughStocks.length) {
+        next({
+          status: 400,
+          name: 'Bad Request',
+          message: 'Stock is not enough',
+        });
+      } else {
+        const result = await sequelize.transaction(async (t) => {
+          await Cart.update({
+            status: true,
+          }, {
+            where: {
+              id: CartId,
+            },
+            returning: true,
+            transaction: t,
+          });
+
+          const promises = [];
+          carts.Items.forEach((el) => {
+           const promise = Product.findOne({
+             where: {
+               id: el.ProductId,
+             },
+             transaction: t,
+           })
+            .then(result => {
+              Product.update({
+                stock: result.stock - Number(el.quantity),
+              }, {
+                where: {
+                  id: result.id,
+                },
+                transaction: t,
+              })
+              .catch(err => {
+                next(err);
+              })
+            })
+            promises.push(promise)
+          });
+          return Promise.all(promises);
+        })
+        res.status(200).json({
+          message: 'Checkout Success'
+        });
+      }
 
     } catch(err) {
-
+      next(err);
     }
   }
 
-  // static async updateItem (req, res, next) {
-  //   try {
-  //     const CartId = req.params.id;
-  //     const { ProductId, quantity } = req.body;
+  static async orderHistory (req, res, next) {
+    try {
+      const UserId = req.decoded.id;
+      const charts = await Cart.findAll({
+        where: {
+          UserId: UserId,
+          status: true,
+        },
+        include: [{
+          model: Item,
+          order: ['id', 'ASC'],
+          include: Product,
+        }]
+      });
+      res.status(200).json(charts);
+    } catch (err) {
+      next(err);
+    }
+  }
 
-  //     const item = await Item.findOne({
-  //       where: {
-  //         CartId,
-  //         ProductId,
-  //       }
-  //     });
 
-  //     if (item) {
-  //       const updated = await Item.update({
-
-  //       })
-  //     }
-  //   } catch(err) {
-  //     next(err);
-  //   }
-
-    
-  // }
 }
 module.exports = Controller;
