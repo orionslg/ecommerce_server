@@ -28,10 +28,11 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
       env:
-        DB_USER=postgres
-        DB_PASSWORD=postgres
-        DB_NAME=postgres
-        DB_PORT=localhost
-        DB_DIALECT=postgres
-        SALT=rahasia
-        SECRET_KEY=rahasia
+        DB_USER: postgres
+        DB_USER: postgres
+        DB_PASSWORD: postgres
+        DB_NAME: test_db
+        DB_PORT: 5432
+        DB_DIALECT: postgres
+        SALT: 9
+        SECRET_KEY: rahasia 
